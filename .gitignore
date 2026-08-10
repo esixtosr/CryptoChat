@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+trusted_contacts.json
+cryptochat-project/trusted_contacts.json
+.DS_Store
