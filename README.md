@@ -17,15 +17,25 @@ This is not a production Signal replacement. It is a focused applied-cryptograph
 - Safer length-prefixed TCP framing with message-size limits
 - Unit tests for crypto/session behavior
 
-## Suggested Demo Media
+## Screenshots
 
-For a portfolio page or GitHub release, the best supporting media would be:
+### Verified Encrypted Chat
 
-- A connected and verified chat screenshot
-- A fingerprint verification prompt screenshot
-- A fingerprint mismatch warning screenshot
-- A short demo video showing `Listen`, `Connect`, verify, then send
-- An optional Wireshark screenshot showing ciphertext on the wire
+![Verified encrypted chat](cryptochat-project/Assets/cryptochat-06-verified-chat-expanded.png)
+
+### Fingerprint Verification
+
+![Fingerprint verification prompt](cryptochat-project/Assets/cryptochat-09-windows-key-verification-dialog.png)
+
+### Collapsed Chat Sidebar
+
+![Collapsed chat sidebar](cryptochat-project/Assets/cryptochat-04-collapsed-sidebar-chat.png)
+
+### Encrypted Traffic Capture
+
+![Wireshark encrypted TCP capture](cryptochat-project/Assets/cryptochat-08-wireshark-encrypted-tcp-capture.png)
+
+Additional demo screenshots are included in `cryptochat-project/Assets/` for portfolio writeups and project documentation.
 
 ## Project Structure
 
@@ -34,7 +44,7 @@ cryptochat-project/
   app.py                  # PyQt6 GUI, chats, trust prompts, send gating
   peer.py                 # TCP framing, role-aware handshake, identity exchange
   crypto_utils.py         # X25519, HKDF, AES-GCM packets, fingerprints
-  Assets/                 # App logo/favicon assets
+  Assets/                 # App logo/favicon and README screenshot assets
   tests/
     test_crypto_utils.py  # Session/key/replay/fingerprint tests
 README.md
