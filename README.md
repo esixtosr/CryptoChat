@@ -17,6 +17,12 @@ This is not a production Signal replacement. It is a focused applied-cryptograph
 - Safer length-prefixed TCP framing with message-size limits
 - Unit tests for crypto/session behavior
 
+## Architecture
+
+![CryptoChat architecture diagram](cryptochat-project/Assets/cryptochat-architecture.svg)
+
+CryptoChat is organized into three layers: the PyQt6 interface, the peer transport layer, and the cryptographic session layer. Two peers connect over TCP, exchange ephemeral X25519 keys, derive directional AES-GCM keys with HKDF-SHA256, verify trust with fingerprints, and send encrypted length-prefixed packets.
+
 ## Screenshots
 
 ### Verified Encrypted Chat
@@ -44,7 +50,7 @@ cryptochat-project/
   app.py                  # PyQt6 GUI, chats, trust prompts, send gating
   peer.py                 # TCP framing, role-aware handshake, identity exchange
   crypto_utils.py         # X25519, HKDF, AES-GCM packets, fingerprints
-  Assets/                 # App logo/favicon and README screenshot assets
+  Assets/                 # App logo/favicon, architecture, and README screenshot assets
   tests/
     test_crypto_utils.py  # Session/key/replay/fingerprint tests
 README.md
