@@ -21,7 +21,7 @@ This is not a production Signal replacement. It is a focused applied-cryptograph
 
 ### Verified Encrypted Chat
 
-![Verified encrypted chat](cryptochat-project/Assets/cryptochat-06-verified-chat-expanded.png)
+![Verified encrypted chat](cryptochat-project/Assets/cryptochat-10-windows-verified-session.png)
 
 ### Fingerprint Verification
 
