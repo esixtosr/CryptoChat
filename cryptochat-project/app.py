@@ -39,6 +39,7 @@ class ChatUI(QWidget):
     message_received = pyqtSignal(str, str)
     status_received = pyqtSignal(str, str)
     identity_received = pyqtSignal(str, str)
+    peer_address_received = pyqtSignal(str, str)
     
     def __init__(self):
         super().__init__()
@@ -204,6 +205,7 @@ class ChatUI(QWidget):
         self.message_received.connect(self.on_peer_message)
         self.status_received.connect(self.on_peer_status)
         self.identity_received.connect(self.on_peer_identity)
+        self.peer_address_received.connect(self.on_peer_address)
 
         self.add_conversation()
 
@@ -438,10 +440,14 @@ class ChatUI(QWidget):
         def on_identity(display_name: str, contact=name):
             self.identity_received.emit(contact, display_name)
 
+        def on_peer_address(address: str, contact=name):
+            self.peer_address_received.emit(contact, address)
+
         p = Peer(
             on_message=on_msg,
             on_status=on_status,
             on_identity=on_identity,
+            on_peer_address=on_peer_address,
             local_name=self.local_name,
         )
         self.peers[name] = p
@@ -905,6 +911,16 @@ class ChatUI(QWidget):
             self.status.setText(f"Status [{contact}]: {display_text}")
             self.update_contact_details(contact)
         self.refresh_conversation_item(contact)
+
+    def on_peer_address(self, contact: str, address: str):
+        """Store and display the remote IP address for either role."""
+        contact = self.resolve_contact(contact)
+        if contact not in self.contact_info:
+            return
+        info = self.contact_info.setdefault(contact, {})
+        info["last_ip"] = address
+        if self.current_contact == contact:
+            self.update_contact_details(contact)
 
     def on_peer_identity(self, contact: str, display_name: str):
         """Handle encrypted display-name metadata from a peer."""

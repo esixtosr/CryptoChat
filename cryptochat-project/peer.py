@@ -15,11 +15,13 @@ class Peer:
         on_message: Callable[[str], None],
         on_status: Callable[[str], None],
         on_identity: Callable[[str], None] | None = None,
+        on_peer_address: Callable[[str], None] | None = None,
         local_name: str = "Anonymous",
     ):
         self.on_message = on_message
         self.on_status = on_status
         self.on_identity = on_identity
+        self.on_peer_address = on_peer_address
         self.local_name = local_name
         self.sess = Session.create()
         self.sock: Optional[socket.socket] = None
@@ -34,6 +36,8 @@ class Peer:
             self.on_status(f"Listening on {host}:{port} - FP {self.sess.fingerprint()}")
             conn, addr = srv.accept()
             self.sock = conn
+            if self.on_peer_address:
+                self.on_peer_address(str(addr[0]))
             self.on_status(f"Connected by {addr}")
             # ECDH: server sends pk first, then receives client pk.
             conn.sendall(self.sess.pk)
@@ -52,6 +56,8 @@ class Peer:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((host, port))
             self.sock = s
+            if self.on_peer_address:
+                self.on_peer_address(host)
             self.on_status(f"Connected to {host}:{port} - FP {self.sess.fingerprint()}")
             # ECDH: client receives server pk first, then sends client pk.
             srv_pk = self._recv_exact(32)
